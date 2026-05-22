@@ -1,330 +1,1305 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Covvy's World - Hub | International Directory</title>
+    <title>Covvy's World | The Ultimate Hub</title>
+    
+    <!-- Google Fonts: Lexend for super-readable headers, Inter for ultra-legible UI body text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
+        /* Modern "Neo-Brutalist Cyber-Pop" Design Token System */
         :root {
-            --bg: #05070f;
-            --bg-card: rgba(15, 23, 42, 0.75);
-            --bg-hover: rgba(30, 41, 70, 0.9);
-            --accent: #6366f1;
-            --accent2: #22d3ee;
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border: rgba(148, 163, 184, 0.1);
-            --glow: 0 0 25px rgba(99, 102, 241, 0.25);
-            --glow2: 0 0 30px rgba(34, 211, 238, 0.2);
+            --bg-canvas: #f4f2ec; /* Soft warm paper tone */
+            --bg-card-yellow: #ffde43; /* Saturated energetic yellow */
+            --bg-card-purple: #c3c7ff; /* Soft tech lavender */
+            --bg-card-pink: #ffa3e3; /* Playful neon pink */
+            --bg-card-cyan: #99f3ff; /* Crisp sky cyan */
+            --bg-card-green: #a2f2b3; /* Energetic mint green */
+            
+            --color-dark-ink: #0d0f12; /* Deepest black ink for structural lines */
+            --color-white: #ffffff;
+            --color-text-muted: #4d5462;
+            
+            --border-thick: 4px solid var(--color-dark-ink);
+            --border-thin: 2px solid var(--color-dark-ink);
+            
+            /* Symmetrical Neo-Brutalist Drop Shadows */
+            --shadow-flat: 4px 4px 0px var(--color-dark-ink);
+            --shadow-deep: 8px 8px 0px var(--color-dark-ink);
+            --shadow-hover: 12px 12px 0px var(--color-dark-ink);
+            
+            --font-display: 'Lexend', sans-serif;
+            --font-sans: 'Inter', sans-serif;
+            
+            --transition-snap: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        /* Basic Resets & Custom Scrollbars */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--color-dark-ink);
+            font-family: var(--font-sans);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow-x: hidden;
-            line-height: 1.6;
+            padding: 0;
         }
 
-        /* Enhanced Dynamic Background */
-        .grid-background {
-            position: fixed;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        .grid-background::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 20%, rgba(34, 211, 238, 0.08), transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(99, 102, 241, 0.08), transparent 50%);
-            z-index: -1;
-        }
-
-        /* Sidebar */
-        aside {
-            width: 320px;
-            background: rgba(10, 15, 30, 0.95);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border);
-            position: fixed;
+        /* Clean and Saturated Header */
+        header {
+            background-color: var(--color-white);
+            border-bottom: var(--border-thick);
+            padding: 20px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
             top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 75%;
+        }
+
+        .header-badge {
+            background-color: var(--bg-card-pink);
+            border: var(--border-thick);
+            padding: 8px 16px;
+            box-shadow: var(--shadow-flat);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--color-dark-ink);
+            transition: var(--transition-snap);
+            flex-shrink: 0;
+        }
+
+        .header-badge:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: var(--shadow-deep);
+        }
+
+        .header-badge i {
+            font-size: 1.3rem;
+        }
+
+        /* STRICT CONSTRAINT: Keep brand label clean and in a single row */
+        .brand-text-container {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .brand-text-container h1 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: -1px;
+            color: var(--color-dark-ink);
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--bg-card-green);
+            border: var(--border-thin);
+            padding: 6px 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 2px 2px 0px var(--color-dark-ink);
+            font-family: var(--font-display);
+            text-transform: uppercase;
+        }
+
+        /* Layout Framework */
+        .wrapper {
+            display: flex;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Side Navigation Bar (Desktop) */
+        aside {
+            width: 300px;
+            background-color: var(--color-white);
+            border-right: var(--border-thick);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 1024px) {
+            aside {
+                display: none; /* Hide side column on tablet & mobile */
+            }
+        }
+
+        .sidebar-title {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding-left: 8px;
+        }
+
+        .side-menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .side-menu-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 0px;
+            color: var(--color-dark-ink);
+            text-decoration: none;
+            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            border: var(--border-thin);
+            background-color: var(--color-white);
+            box-shadow: var(--shadow-flat);
+            transition: var(--transition-snap);
+        }
+
+        .side-menu-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: var(--shadow-deep);
+            background-color: #faf9f6;
+        }
+
+        .side-menu-btn.active {
+            background-color: var(--bg-card-purple);
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px var(--color-dark-ink);
+        }
+
+        .side-menu-btn .btn-number {
+            margin-left: auto;
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            background-color: var(--color-white);
+            border: var(--border-thin);
+            padding: 1px 6px;
+        }
+
+        /* Main Workspace Core */
+        main {
+            flex: 1;
+            padding: 40px;
             display: flex;
             flex-direction: column;
         }
 
-        .sidebar-brand {
-            padding: 32px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 14px;
+        @media (max-width: 640px) {
+            main {
+                padding: 20px;
+            }
         }
 
-        .logo-icon {
-            width: 46px;
-            height: 46px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-            box-shadow: var(--glow);
-        }
-
-        .sidebar-brand h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 1.35rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #f1f5f9, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent2);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            padding: 20px 24px 8px;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 24px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-left: 3px solid transparent;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: rgba(99, 102, 241, 0.1);
-            color: white;
-            border-left-color: var(--accent);
-        }
-
-        .nav-link i {
-            width: 20px;
-            color: var(--accent);
-        }
-
-        /* Main Content */
-        main {
-            margin-left: 320px;
-            padding: 48px;
-            min-height: 100vh;
-        }
-
-        .hub-topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .status-badge {
-            background: rgba(16, 185, 129, 0.1);
-            color: #34d399;
-            padding: 8px 18px;
-            border-radius: 9999px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid rgba(52, 211, 153, 0.2);
-        }
-
-        /* Dashboard Hero */
-        .dashboard-hero {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(10, 15, 30, 0.95));
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            border-radius: 24px;
-            padding: 72px 64px;
-            margin-bottom: 48px;
+        /* Saturated Bento Hero Module */
+        .hero-banner {
+            background-color: var(--bg-card-yellow);
+            border: var(--border-thick);
+            padding: 40px;
+            margin-bottom: 30px;
             position: relative;
-            overflow: hidden;
-            box-shadow: var(--glow);
+            box-shadow: var(--shadow-deep);
         }
 
-        .dashboard-hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -30%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent 70%);
-            pointer-events: none;
+        .hero-banner h2 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            line-height: 1.1;
         }
 
-        .dashboard-hero h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #f8fafc, #67e8f9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
+        .hero-banner p {
+            color: var(--color-dark-ink);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            max-width: 800px;
+            font-weight: 500;
         }
 
-        /* Search Bar */
-        .search-container {
-            background: var(--bg-card);
-            border: 1px solid rgba(148, 163, 184, 0.15);
-            border-radius: 20px;
-            padding: 18px 24px;
+        /* Hero Statistics Grid */
+        .hero-stats-row {
             display: flex;
             align-items: center;
             gap: 16px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(12px);
+            margin-top: 24px;
+            flex-wrap: wrap;
         }
 
-        .search-container:focus-within {
-            border-color: var(--accent2);
-            box-shadow: var(--glow2);
-            transform: translateY(-2px);
+        .stat-badge {
+            background-color: var(--color-white);
+            border: var(--border-thin);
+            padding: 6px 16px;
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-flat);
         }
 
-        .search-input {
+        .stat-badge span {
+            color: var(--color-text-muted);
+        }
+
+        /* Brutalist Real-Time Search Box */
+        .brutalist-search-frame {
+            display: flex;
+            align-items: center;
+            background-color: var(--color-white);
+            border: var(--border-thick);
+            padding: 14px 20px;
+            margin-bottom: 35px;
+            box-shadow: var(--shadow-deep);
+            transition: var(--transition-snap);
+            gap: 14px;
+        }
+
+        .brutalist-search-frame:focus-within {
+            transform: translate(-3px, -3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .brutalist-search-frame i {
+            font-size: 1.4rem;
+            color: var(--color-dark-ink);
+        }
+
+        .brutalist-search-input {
+            width: 100%;
             background: none;
             border: none;
             outline: none;
-            width: 100%;
-            color: white;
+            color: var(--color-dark-ink);
+            font-family: var(--font-sans);
             font-size: 1.1rem;
-        }
-
-        /* Category Cards */
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 28px;
-        }
-
-        .category-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 32px;
-            transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-            backdrop-filter: blur(12px);
-        }
-
-        .category-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            border-color: var(--accent2);
-            box-shadow: var(--glow2);
-        }
-
-        .category-card-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--accent);
-            transition: all 0.4s ease;
-        }
-
-        .category-card:hover .category-card-icon {
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            color: white;
-            transform: rotate(12deg);
-        }
-
-        /* Directory Items */
-        .directory-item-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 32px;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(12px);
-        }
-
-        .directory-item-card:hover {
-            border-color: var(--accent2);
-            box-shadow: var(--glow);
-            transform: translateY(-6px);
-        }
-
-        .launch-btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 16px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 14px;
-            color: white;
             font-weight: 600;
+        }
+
+        .brutalist-search-input::placeholder {
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
+        /* Brutalist Category Grid Layout */
+        .brutalist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        /* Cyber-Pop Bento Card Component */
+        .brutalist-card {
+            background-color: var(--color-white);
+            border: var(--border-thick);
+            padding: 24px;
+            text-decoration: none;
+            color: var(--color-dark-ink);
+            box-shadow: var(--shadow-deep);
+            transition: var(--transition-snap);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brutalist-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .brutalist-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-icon-container {
+            width: 50px;
+            height: 50px;
+            border: var(--border-thick);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.3rem;
+            transition: var(--transition-snap);
+        }
+
+        .brutalist-card-title {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            margin-top: 10px;
+        }
+
+        .brutalist-card-desc {
+            color: var(--color-text-muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .brutalist-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-top: var(--border-thin);
+            padding-top: 12px;
+        }
+
+        .card-position-badge {
+            background-color: var(--color-dark-ink);
+            color: var(--color-white);
+            padding: 2px 8px;
+            font-size: 0.75rem;
+        }
+
+        /* Dynamic View Frame Layouts */
+        .view-frame {
+            display: none;
+        }
+
+        .view-frame.active {
+            display: block;
+        }
+
+        /* Subdirectory Page Nav Header */
+        .subdir-nav-header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-bottom: 24px;
+            margin-bottom: 30px;
+            border-bottom: var(--border-thick);
+        }
+
+        .btn-back-home {
+            color: var(--color-dark-ink);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 800;
+            font-family: var(--font-display);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-snap);
+            width: max-content;
+        }
+
+        .btn-back-home:hover {
+            transform: translateX(-4px);
+        }
+
+        .subdir-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .subdir-title-row h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
             gap: 12px;
-            transition: all 0.4s ease;
+            letter-spacing: -1px;
         }
 
-        .directory-item-card:hover .launch-btn {
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            color: white;
-            border-color: transparent;
+        /* Directory Platforms Grid */
+        .platforms-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
         }
 
-        /* Responsive */
-        @media (max-width: 1024px) {
-            aside {
-                transform: translateX(-100%);
-                transition: 0.4s ease;
+        @media (max-width: 480px) {
+            .platforms-list-grid {
+                grid-template-columns: 1fr;
             }
-            main {
-                margin-left: 0;
+        }
+
+        /* Saturated Brutalist Platform Card */
+        .platform-brutalist-card {
+            background-color: var(--color-white);
+            border: var(--border-thick);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: var(--shadow-deep);
+            transition: var(--transition-snap);
+        }
+
+        .platform-brutalist-card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .platform-data {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .platform-title-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--color-dark-ink);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .platform-domain-text {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            word-break: break-all;
+        }
+
+        .platform-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .platform-pill {
+            font-size: 0.75rem;
+            background-color: var(--bg-canvas);
+            color: var(--color-dark-ink);
+            border: var(--border-thin);
+            padding: 4px 10px;
+            font-weight: 700;
+            font-family: var(--font-sans);
+            transition: var(--transition-snap);
+        }
+
+        .platform-brutalist-card:hover .platform-pill {
+            background-color: var(--bg-card-pink);
+        }
+
+        /* Saturated Brutalist Launch Button */
+        .btn-launch-url {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--color-white);
+            border: var(--border-thick);
+            padding: 12px 20px;
+            color: var(--color-dark-ink);
+            text-decoration: none;
+            font-weight: 800;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-flat);
+            transition: var(--transition-snap);
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-launch-url:hover {
+            background-color: var(--color-dark-ink);
+            color: var(--color-white);
+            box-shadow: 0px 0px 0px var(--color-dark-ink);
+            transform: translate(4px, 4px);
+        }
+
+        /* Zero Records Frame */
+        .zero-state-block {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            background-color: var(--color-white);
+            border: var(--border-thick);
+            box-shadow: var(--shadow-deep);
+        }
+
+        .zero-state-block i {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .zero-state-block h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .zero-state-block p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* High-Readability Legal Layout Structure */
+        .legal-container {
+            background-color: var(--color-white);
+            border: var(--border-thick);
+            padding: 40px;
+            box-shadow: var(--shadow-deep);
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+        }
+
+        @media (max-width: 640px) {
+            .legal-container {
                 padding: 24px;
             }
+        }
+
+        .legal-container h3 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            border-bottom: var(--border-thin);
+            padding-bottom: 8px;
+        }
+
+        .legal-container h4 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 800;
+            margin: 24px 0 10px 0;
+            color: var(--color-dark-ink);
+        }
+
+        .legal-container p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--color-dark-ink);
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        .legal-container ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .legal-container li {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--color-dark-ink);
+            font-weight: 500;
+        }
+
+        .legal-container .meta-date {
+            background-color: var(--bg-card-yellow);
+            border: var(--border-thin);
+            padding: 4px 10px;
+            font-size: 0.78rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        /* Saturated Solid Footer */
+        footer {
+            border-top: var(--border-thick);
+            padding: 30px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            background-color: var(--color-white);
+            margin-top: auto;
+        }
+
+        footer a {
+            color: var(--color-dark-ink);
+            text-decoration: none;
+            margin: 0 8px;
+            border-bottom: 2px solid var(--color-dark-ink);
+            cursor: pointer;
+        }
+
+        footer a:hover {
+            background-color: var(--bg-card-yellow);
         }
     </style>
 </head>
 <body>
 
-    <div class="grid-background"></div>
+    <!-- Saturated Top Header -->
+    <header>
+        <div class="header-left">
+            <a href="#" class="header-badge" onclick="navigateTo('home')">
+                <i class="fa-solid fa-cube"></i>
+                <div class="brand-text-container">
+                    <h1>Covvy's World</h1>
+                </div>
+            </a>
+        </div>
+        <div class="system-status">
+            <div style="width: 8px; height: 8px; background-color: var(--color-dark-ink); border-radius: 50%;"></div>
+            <span>LIVE REGISTRY</span>
+        </div>
+    </header>
 
-    <!-- Your existing HTML structure remains unchanged -->
-    <!-- (sidebar, main, views, script, etc.) -->
+    <div class="wrapper">
+        
+        <!-- Saturated Navigation Sidebar (Desktop screens) -->
+        <aside>
+            <div class="sidebar-title">
+                <i class="fa-solid fa-compass"></i> Index Menu
+            </div>
+            <ul class="side-nav-menu">
+                <li>
+                    <a href="#" class="side-nav-btn active" id="btn-side-home" onclick="navigateTo('home')">
+                        <i class="fa-solid fa-house"></i> Home Dashboard
+                    </a>
+                </li>
+            </ul>
 
-    <!-- Paste your entire <body> content here (from original) -->
+            <div class="sidebar-title" style="margin-top: 15px;">
+                <i class="fa-solid fa-layer-group"></i> Categories
+            </div>
+            <ul class="side-nav-menu" id="sidebar-categories-list">
+                <!-- Dynamically populated categories -->
+            </ul>
+        </aside>
 
+        <!-- Main Dynamic View Area -->
+        <main>
+            
+            <!-- VIEW STATE 1: HOMEPAGE PANEL -->
+            <div id="view-home" class="view-frame active">
+                
+                <!-- Saturated Brutalist Welcome Card -->
+                <section class="hero-banner">
+                    <h2>Covvy's World</h2>
+                    <p>
+                        A high-readability directory compiling world-renowned digital systems, financial institutions, global wholesale networks, mega malls, AI helpers, and music assemblies into a fast, searchable workspace index.
+                    </p>
+                    <div class="hero-stats-row">
+                        <div class="stat-badge">
+                            <span>Sectors:</span> <strong id="stat-count-categories">14</strong>
+                        </div>
+                        <div class="stat-badge">
+                            <span>Verified Links:</span> <strong id="stat-count-platforms">--</strong>
+                        </div>
+                        <div class="stat-badge">
+                            <span>Status:</span> <strong style="color: #10b981;">Online</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Brutalist Home-Screen Search Engine -->
+                <div class="brutalist-search-frame">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="home-category-search" class="brutalist-search-input" placeholder="Search directory sectors (e.g. type 'banks', 'shopping', 'music', 'crypto', 'shows')..." oninput="filterDashboardCategories()" autocomplete="off">
+                </div>
+
+                <!-- Bento Category Grid -->
+                <div class="brutalist-grid" id="dashboard-categories-bento">
+                    <!-- Populated via Javascript state router -->
+                </div>
+
+            </div>
+
+            <!-- VIEW STATE 2: DIRECTORY DETAILS PAGE -->
+            <div id="view-directory" class="view-frame">
+                
+                <div class="subdir-nav-header">
+                    <a href="#" class="btn-back-home" onclick="navigateTo('home')">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Home Dashboard
+                    </a>
+                    <div class="subdir-title-row">
+                        <h2 id="dir-page-title"><i class="fa-solid fa-circle"></i> Directory</h2>
+                        <span class="system-status" id="dir-page-item-count" style="font-family: var(--font-display);">0 items</span>
+                    </div>
+                </div>
+
+                <!-- Bouncy Search Input for Listings within selected Directory -->
+                <div class="brutalist-search-frame">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="dir-platform-search" class="brutalist-search-input" placeholder="Filter inside directory..." oninput="filterActivePlatformList()" autocomplete="off">
+                </div>
+
+                <!-- Active list items -->
+                <div class="platforms-list-grid" id="dir-platforms-container">
+                    <!-- Populated via Javascript -->
+                </div>
+
+            </div>
+
+            <!-- VIEW STATE 3: PRIVACY POLICY -->
+            <div id="view-privacy" class="view-frame">
+                <div class="subdir-nav-header">
+                    <a href="#" class="btn-back-home" onclick="navigateTo('home')">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Home Dashboard
+                    </a>
+                    <div class="subdir-title-row">
+                        <h2><i class="fa-solid fa-shield-halved"></i> Privacy Policy</h2>
+                        <span class="system-status">APPROVED</span>
+                    </div>
+                </div>
+
+                <div class="legal-container">
+                    <h3>Privacy Policy</h3>
+                    <div class="meta-date">LAST REVISED: MAY 22, 2026</div>
+
+                    <p>Welcome to Covvy's World. Your privacy is paramount to us. This Privacy Policy outlines our procedures regarding the collection, use, and disclosure of information when you interact with our digital directory platform.</p>
+
+                    <h4>1. Pure Navigation and No Logging Policy</h4>
+                    <p>Covvy's World is designed as a direct navigation clearinghouse. We act purely as a gateway to external networks, platforms, and services. As a consequence:</p>
+                    <ul>
+                        <li>We do not require user account creation, registrations, or login profiles to access any of our directories.</li>
+                        <li>We do not actively log, monitor, or track your personal search queries, IP addresses, or location data on our servers.</li>
+                        <li>All filtering and search operations performed via the "Home Dashboard" or "Directory Search" run entirely in your local browser’s processing memory. No search logs are compiled or transmitted.</li>
+                    </ul>
+
+                    <h4>2. Third-Party Websites & Data Hand-off</h4>
+                    <p>Our service provides direct external hyperlinking to world-renowned platforms, wholesalers, malls, and events. Once you select a link and activate "Open URL", you depart from the safe boundaries of Covvy's World:</p>
+                    <ul>
+                        <li>We do not control the cookie trackers, logging practices, or profiling procedures utilized by external destinations.</li>
+                        <li>Your interactions with any linked platform are governed strictly by the respective third party’s privacy documentation and cookie consent policies. We strongly encourage you to review their local parameters.</li>
+                    </ul>
+
+                    <h4>3. Information Collected Automatically</h4>
+                    <p>When you access our single-page application framework, standard performance metrics may be read automatically (such as viewport ratios, browser engine classifications, and system performance capabilities) to dynamically scale our Neo-Brutalist interface. This performance diagnostics hand-off is entirely anonymous and never stored.</p>
+
+                    <h4>4. Cookie and Storage Framework</h4>
+                    <p>We do not run tracking cookies, profiling pixels, or marketing scripts. We may periodically use local browser cache states solely to preserve your visual configuration preferences (such as directory routing memory) to expedite load times on subsequent visits.</p>
+
+                    <h4>5. Global Policy Conformity</h4>
+                    <p>Because Covvy's World does not capture, store, or sell any personal data pipelines, our platform remains structurally compliant with international data safety benchmarks, including the European Union General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA).</p>
+
+                    <br>
+                    <a href="#" class="btn-launch-url" onclick="navigateTo('home')">I Understand, Return to Dashboard</a>
+                </div>
+            </div>
+
+            <!-- VIEW STATE 4: TERMS & CONDITIONS -->
+            <div id="view-terms" class="view-frame">
+                <div class="subdir-nav-header">
+                    <a href="#" class="btn-back-home" onclick="navigateTo('home')">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Home Dashboard
+                    </a>
+                    <div class="subdir-title-row">
+                        <h2><i class="fa-solid fa-file-contract"></i> Terms & Conditions</h2>
+                        <span class="system-status">COMPLIANT</span>
+                    </div>
+                </div>
+
+                <div class="legal-container">
+                    <h3>Terms of Use & Conditions</h3>
+                    <div class="meta-date">EFFECTIVE DATE: MAY 22, 2026</div>
+
+                    <p>By entering Covvy's World (hereafter referred to as the "Service", the "Platform", or the "Hub"), you signify your agreement to the following Terms of Use and Conditions. Please read these guidelines carefully before navigating our directory indexes.</p>
+
+                    <h4>1. Scope of Service</h4>
+                    <p>Covvy's World operates solely as an independent, non-affiliated navigation directory. We curate structural references and link directly to popular, verified third-party organizations, retailers, events, and resources. We make no claims of official partnership or commercial affiliation with the linked corporate entities unless explicitly detailed.</p>
+
+                    <h4>2. Acceptable Use and Operations</h4>
+                    <p>Users are granted a non-exclusive, revocable license to interact with Covvy's World for personal navigation and utility searching. You explicitly agree not to:</p>
+                    <ul>
+                        <li>Use automated scripts, scraper engines, or bots to harvest links, catalog indices, or architectural tags from our source file.</li>
+                        <li>Attempt to inject malicious payloads, scripts, or database queries into our front-end input fields.</li>
+                        <li>Disrupt the visual layout, structural margins, or normal browser execution of our single-page system.</li>
+                    </ul>
+
+                    <h4>3. Liability Disclaimer for Outbound Destinations</h4>
+                    <p>Covvy's World acts as a directional pointer. Because external environments update their addresses, digital assets, and corporate practices independently, we make no representations concerning:</p>
+                    <ul>
+                        <li>The safety, cleanliness, accuracy, or suitability of any third-party content accessed via our direct links.</li>
+                        <li>The operational status, online uptime, or financial transactions executed on any of the indexed platform destinations (including listed Banks, Wholesalers, or Travel agencies).</li>
+                        <li>Any loss, digital compromise, or tracking liabilities resulting from your departure to external web architectures.</li>
+                    </ul>
+
+                    <h4>4. Intellectual Property Rights</h4>
+                    <p>All styling tokens, custom Neo-Brutalist layouts, code structures, routing mechanics, search tagging metadata, and logo groupings are the property of Covvy's World. Third-party brand names, domain strings, trademarked brand icons, and business markers displayed in our directory cards remain the exclusive intellectual property of their respective trademark owners.</p>
+
+                    <h4>5. Limitation of Liability and "As-Is" Warranty</h4>
+                    <p>The Service is compiled and provided on an "as-is" and "as-available" baseline without warranties of any sort, express or implied. Under no circumstances shall Covvy's World, its creators, or administrators be liable for any direct, collateral, special, or consequential damages resulting from your navigation of this index.</p>
+
+                    <br>
+                    <a href="#" class="btn-launch-url" onclick="navigateTo('home')">Accept & Close Terms</a>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Brutalist Interactive Footer -->
+    <footer>
+        <p>
+            © 2026 Covvy's World • Curated Catalog • 
+            <a href="#" onclick="navigateTo('home')">Dashboard</a> • 
+            <a href="#" onclick="navigateTo('privacy')">Privacy Policy</a> • 
+            <a href="#" onclick="navigateTo('terms')">Terms & Conditions</a>
+        </p>
+    </footer>
+
+    <!-- JS State Engine & Routing Controllers -->
+    <script>
+        // Centralized Master Directory Catalog
+        // Saturated background color allocations for Neo-Brutalist cards
+        const cardColors = [
+            'var(--bg-card-pink)', 
+            'var(--bg-card-purple)', 
+            'var(--bg-card-cyan)', 
+            'var(--bg-card-green)'
+        ];
+
+        // World-Renowned Banks placed at absolute Index #1
+        const directoryData = {
+            banks: {
+                title: "World-Renowned Banks",
+                icon: "fa-solid fa-building-columns",
+                desc: "Premier international banking houses, investment corridors, and secure retail asset managers.",
+                searchTags: ["banks", "banking", "finance", "money", "wallets", "credit", "cards", "investments", "checking", "wire transfers"],
+                items: [
+                    { name: "JPMorgan Chase", url: "https://www.jpmorganchase.com", tags: ["USA", "investment banking", "chase sapphire", "credit cards", "wealth management", "global finance"] },
+                    { name: "Industrial and Commercial Bank of China", url: "https://www.icbc.com.cn", tags: ["China", "beijing", "largest bank by assets", "commercial banking", "global scale"] },
+                    { name: "Bank of America", url: "https://www.bankofamerica.com", tags: ["USA", "merrill lynch", "checking account", "atm network", "retail banking", "mortgage"] },
+                    { name: "HSBC Holdings", url: "https://www.hsbc.com", tags: ["UK", "london", "hong kong", "international wire", "multinational", "offshore account"] },
+                    { name: "Banco Santander", url: "https://www.santander.com", tags: ["Spain", "europe", "retail banking", "eurozone", "loans", "south america"] },
+                    { name: "Citigroup", url: "https://www.citigroup.com", tags: ["USA", "citi", "institutional clients", "global credit cards", "wall street", "trading"] },
+                    { name: "BNP Paribas", url: "https://group.bnpparibas", tags: ["France", "paris", "eurozone banking", "corporate investment", "asset management"] },
+                    { name: "Mitsubishi UFJ Financial Group (MUFG)", url: "https://www.mufg.jp/english/", tags: ["Japan", "tokyo", "asia scale", "structured finance", "corporate lending"] }
+                ]
+            },
+            social: {
+                title: "Social Media Platforms",
+                icon: "fa-solid fa-share-nodes",
+                desc: "High-traffic international social networks, instant messengers, and visual channels.",
+                searchTags: ["social", "apps", "chat", "videos", "networking", "forums", "messages", "friends", "sharing", "instagram", "tiktok"],
+                items: [
+                    { name: "Instagram", url: "https://www.instagram.com", tags: ["photos", "videos", "stories", "meta", "chat", "reels", "influencer"] },
+                    { name: "TikTok", url: "https://www.tiktok.com", tags: ["short video", "viral", "trends", "music", "dance", "bytedance", "china"] },
+                    { name: "X (formerly Twitter)", url: "https://x.com", tags: ["news", "tweets", "threads", "realtime", "microblogging", "trending"] },
+                    { name: "Facebook", url: "https://www.facebook.com", tags: ["friends", "groups", "meta", "marketplace", "feed", "social graph"] },
+                    { name: "LinkedIn", url: "https://www.linkedin.com", tags: ["jobs", "networking", "professional", "resume", "corporate", "b2b"] },
+                    { name: "Reddit", url: "https://www.reddit.com", tags: ["forums", "communities", "subreddits", "discussion", "upvote", "crowdsourced"] },
+                    { name: "YouTube", url: "https://www.youtube.com", tags: ["google", "streaming", "vlogs", "video hosting", "tutorials", "creators"] },
+                    { name: "WhatsApp", url: "https://www.whatsapp.com", tags: ["chat", "meta", "encrypted messaging", "voice calls", "global standard"] }
+                ]
+            },
+            music: {
+                title: "Music Streaming Platforms",
+                icon: "fa-solid fa-music",
+                desc: "Hi-fi audio libraries, curated playlists, and live independent radio pipelines.",
+                searchTags: ["music", "audio", "streaming", "songs", "playlists", "podcasts", "albums", "artists", "mp3", "beats"],
+                items: [
+                    { name: "Spotify", url: "https://www.spotify.com", tags: ["playlists", "podcasts", "albums", "audio", "premium", "sweden", "recommender"] },
+                    { name: "Apple Music", url: "https://music.apple.com", tags: ["ios", "lossless", "spatial audio", "itunes", "streaming", "exclusive releases"] },
+                    { name: "YouTube Music", url: "https://music.youtube.com", tags: ["videos", "google", "remixes", "live performances", "covers"] },
+                    { name: "Amazon Music", url: "https://music.amazon.com", tags: ["prime subscription", "alexa integration", "hd audio", "cloud library"] },
+                    { name: "Tidal", url: "https://www.tidal.com", tags: ["hifi", "high fidelity", "artists owners", "lossless streaming", "master quality"] },
+                    { name: "SoundCloud", url: "https://soundcloud.com", tags: ["indie", "underground rap", "demos", "remixes", "electronic music", "creators"] }
+                ]
+            },
+            clothing: {
+                title: "Online Clothing Stores",
+                icon: "fa-solid fa-shirt",
+                desc: "Renowned streetwear lines, luxury apparel boutiques, and logistics-heavy fashion retailers.",
+                searchTags: ["clothing", "stores", "shopping", "fashion", "apparel", "sneakers", "dresses", "brands", "streetwear", "fits"],
+                items: [
+                    { name: "ASOS", url: "https://www.asos.com", tags: ["fashion", "trends", "shoes", "global shipping", "streetwear", "uk"] },
+                    { name: "Zara", url: "https://www.zara.com", tags: ["fast fashion", "suits", "dresses", "spain", "inditex", "premium retail"] },
+                    { name: "H&M", url: "https://www2.hm.com", tags: ["affordable", "basics", "sustainability", "sweden", "kids clothing", "home line"] },
+                    { name: "Nike Store", url: "https://www.nike.com", tags: ["sneakers", "sportswear", "activewear", "jordan", "athletes", "apparel"] },
+                    { name: "Shein", url: "https://www.shein.com", tags: ["cheap clothing", "ultra fast fashion", "hauls", "trends", "discounts", "china shipping"] },
+                    { name: "Uniqlo", url: "https://www.uniqlo.com", tags: ["Japan", "lifewear", "minimalist", "heattech", "quality basics"] }
+                ]
+            },
+            movies: {
+                title: "Movie & Series Streaming",
+                icon: "fa-solid fa-film",
+                desc: "Elite entertainment channels hosting box offices, award-winning series, and anime pipelines.",
+                searchTags: ["movies", "series", "streaming", "shows", "cinema", "films", "tv", "netflix", "anime", "hollywood", "video"],
+                items: [
+                    { name: "Netflix", url: "https://www.netflix.com", tags: ["originals", "binge-watching", "series", "films", "documentaries", "kdrama"] },
+                    { name: "Prime Video", url: "https://www.primevideo.com", tags: ["amazon", "movies", "exclusive series", "the boys", "delivery bundle"] },
+                    { name: "Disney+", url: "https://www.disneyplus.com", tags: ["marvel", "star wars", "pixar", "kids channel", "national geographic"] },
+                    { name: "Max (HBO)", url: "https://www.max.com", tags: ["prestige tv", "warner bros", "game of thrones", "succession", "cinema releases"] },
+                    { name: "Crunchyroll", url: "https://www.crunchyroll.com", tags: ["anime", "manga", "japan", "subtitled", "dubbed", "animation"] }
+                ]
+            },
+            email: {
+                title: "Email Applications",
+                icon: "fa-solid fa-envelope",
+                desc: "High-security digital mailboxes, cloud integration engines, and corporate workspaces.",
+                searchTags: ["email", "apps", "inbox", "mail", "gmail", "outlook", "messages", "workspace", "communication"],
+                items: [
+                    { name: "Gmail", url: "https://mail.google.com", tags: ["google", "workspace", "free mail", "drive integration", "inbox filters"] },
+                    { name: "Outlook", url: "https://outlook.live.com", tags: ["microsoft", "hotmail", "calendar sync", "office bundle", "corporate mail"] },
+                    { name: "ProtonMail", url: "https://proton.me", tags: ["encrypted", "privacy first", "secure link", "switzerland servers", "anonymous access"] },
+                    { name: "Yahoo Mail", url: "https://mail.yahoo.com", tags: ["classic", "news stream", "free storage", "vintage account", "inbox organization"] }
+                ]
+            },
+            appstores: {
+                title: "Application Stores",
+                icon: "fa-solid fa-store",
+                desc: "Centralized app hubs, secure operating system marketplaces, and pc gaming library launchers.",
+                searchTags: ["application", "stores", "apps", "games", "download", "play store", "steam", "mobile", "software"],
+                items: [
+                    { name: "Google Play Store", url: "https://play.google.com", tags: ["android OS", "mobile apps", "games library", "google account", "mobile security"] },
+                    { name: "Apple App Store", url: "https://www.apple.com/app-store/", tags: ["ios ecosystem", "iphone apps", "ipad", "mac appstore", "secure payments"] },
+                    { name: "Steam", url: "https://store.steampowered.com", tags: ["pc gaming", "valve system", "mods", "multiplayer matchmaking", "sales discounts"] },
+                    { name: "Epic Games Store", url: "https://store.epicgames.com", tags: ["free weekly games", "unreal engine", "fortnite launcher", "pc exclusive"] }
+                ]
+            },
+            wholesalers: {
+                title: "Wholesale Mega Stores",
+                icon: "fa-solid fa-box-open",
+                desc: "Massive offline warehouses and global supply contract pipelines.",
+                searchTags: ["wholesale", "wholesalers", "bulk", "warehouse", "stores", "b2b", "alibaba", "costco", "supplies"],
+                items: [
+                    { name: "Costco Wholesale", url: "https://www.costco.com", tags: ["bulk goods", "membership model", "offline warehouse", "kirkland signature", "usa"] },
+                    { name: "Alibaba", url: "https://www.alibaba.com", tags: ["b2b import", "china hub", "bulk shipping", "manufacturers contracts", "trade assurance"] },
+                    { name: "Sam's Club", url: "https://www.samsclub.com", tags: ["walmart brand", "bulk groceries", "offline retail club", "wholesale rates"] },
+                    { name: "Metro AG", url: "https://www.metro.de", tags: ["europe network", "cash and carry", "gastronomy sourcing", "b2b supply chains"] }
+                ]
+            },
+            malls: {
+                title: "World Famous Malls",
+                icon: "fa-solid fa-city",
+                desc: "Elite structural landmarks combining world-class boutique retail and family amusement parks.",
+                searchTags: ["malls", "shopping", "complex", "countries", "retail", "buildings", "dubai", "sandton", "stores"],
+                items: [
+                    { name: "The Dubai Mall", url: "https://thedubaimall.com", tags: ["UAE", "dubai", "largest mall globally", "aquarium feature", "luxury boutiques"] },
+                    { name: "Mall of America", url: "https://www.mallofamerica.com", tags: ["USA", "minnesota", "indoor theme park", "underwater aquarium", "mega complex"] },
+                    { name: "Westfield Stratford City", url: "https://www.westfield.com/united-kingdom/stratfordcity", tags: ["UK", "london east", "europe scale", "olympic park shopping"] },
+                    { name: "SM Mall of Asia", url: "https://www.smsupermalls.com", tags: ["Philippines", "manila", "bay area retail", "imax theater", "indoor ice skating"] },
+                    { name: "Sandton City", url: "https://sandtoncity.com", tags: ["South Africa", "johannesburg", "luxury fashion", "nelson mandela square landmarks"] }
+                ]
+            },
+            dealerships: {
+                title: "Car Dealership Networks",
+                icon: "fa-solid fa-car",
+                desc: "High-volume automotive networks, certified inspection centers, and digital bid systems.",
+                searchTags: ["car", "dealerships", "automotive", "vehicles", "dealers", "showroom", "used cars", "buying"],
+                items: [
+                    { name: "AutoNation", url: "https://www.autonation.com", tags: ["USA", "new vehicle sales", "used car lots", "nationwide dealership network"] },
+                    { name: "CarMax", url: "https://www.carmax.com", tags: ["pre-owned vehicles", "no-haggle price", "certified inspections", "car selling portal"] },
+                    { name: "Cazoo", url: "https://www.cazoo.co.uk", tags: ["UK", "online car buy and finance", "home car delivery", "refurbished used autos"] },
+                    { name: "Emil Frey", url: "https://www.emilfrey.ch", tags: ["Europe import", "switzerland HQ", "car distribution network", "luxury brands"] }
+                ]
+            },
+            ai: {
+                title: "AI Assistants & Models",
+                icon: "fa-solid fa-robot",
+                desc: "Highly-tuned generative neural networks, coding co-pilots, and automation tools.",
+                searchTags: ["ai", "assistants", "chatgpt", "gemini", "bots", "intelligence", "models", "automation", "coding"],
+                items: [
+                    { name: "ChatGPT (OpenAI)", url: "https://chatgpt.com", tags: ["gpt-4o", "large language model", "coding sandbox", "automation", "text parsing"] },
+                    { name: "Gemini (Google)", url: "https://gemini.google.com", tags: ["google AI", "workspace tools", "multimodal inputs", "direct search indexing"] },
+                    { name: "Claude (Anthropic)", url: "https://claude.ai", tags: ["anthropic engine", "advanced code assist", "long context window", "artifacts UI"] },
+                    { name: "Copilot (Microsoft)", url: "https://copilot.microsoft.com", tags: ["windows assistant", "office suite link", "bing query integration", "dall-e creator"] }
+                ]
+            },
+            events: {
+                title: "Global Festivals & Events",
+                icon: "fa-solid fa-calendar-days",
+                desc: "Vibrant global musical gatherings, massive carnival parades, and legendary celebrations.",
+                searchTags: ["events", "festivals", "concerts", "turn ups", "coachella", "parties", "shows", "music", "country"],
+                items: [
+                    { name: "Coachella Valley Music Festival", url: "https://www.coachella.com", tags: ["USA", "california desert", "indio music", "pop and indie", "celebrities guest"] },
+                    { name: "Tomorrowland", url: "https://www.tomorrowland.com", tags: ["Belgium europe", "edm show", "electronic dance", "international djs", "mainstage raves"] },
+                    { name: "Glastonbury Festival", url: "https://www.glastonburyfestivals.co.uk", tags: ["UK Somerset", "rock history", "massive camping", "pyramid stage", "muddy festivals"] },
+                    { name: "Rio Carnival", url: "https://www.riocarnaval.org", tags: ["Brazil", "rio de janeiro parade", "samba dancer schools", "vibrant costumes", "street parties"] },
+                    { name: "Oktoberfest", url: "https://www.oktoberfest.de", tags: ["Germany", "munich bavaria", "beer festival tents", "traditional dirndl", "amusement rides"] }
+                ]
+            },
+            travel: {
+                title: "Travel Booking Portals",
+                icon: "fa-solid fa-plane-departure",
+                desc: "Global airline aggregators, vacation rental hubs, and reservation networks.",
+                searchTags: ["travel", "booking", "flights", "hotels", "airlines", "vacation", "rooms", "booking.com", "trips"],
+                items: [
+                    { name: "Booking.com", url: "https://www.booking.com", tags: ["hotel reservation", "apartment lease", "global travel booking", "rentals", "car hire"] },
+                    { name: "Skyscanner", url: "https://www.skyscanner.com", tags: ["cheap flight searches", "airline price comparator", "flexible dates check", "global travel engine"] },
+                    { name: "Airbnb", url: "https://www.airbnb.com", tags: ["vacation home booking", "local home rental", "condo listings", "host experiences"] },
+                    { name: "TripAdvisor", url: "https://www.tripadvisor.com", tags: ["hotel tourist reviews", "restaurant rating systems", "vacation itineraries", "travel forums"] }
+                ]
+            },
+            crypto: {
+                title: "Crypto & Web3 Platforms",
+                icon: "fa-solid fa-wallet",
+                desc: "Decentralized liquidity markets, digital coin vaults, and non-custodial blockchain bridges.",
+                searchTags: ["crypto", "web3", "bitcoin", "wallets", "exchange", "blockchain", "ethereum", "trading", "tokens"],
+                items: [
+                    { name: "Binance Exchange", url: "https://www.binance.com", tags: ["cryptocurrency trade", "bitcoin charts", "ethereum liquidity", "spot leverage", "staking yields"] },
+                    { name: "Coinbase", url: "https://www.coinbase.com", tags: ["crypto retail broker", "usa compliance", "layer 2 base network", "digital coin wallet"] },
+                    { name: "MetaMask", url: "https://metamask.io", tags: ["web3 browser extension", "ethereum non-custodial wallet", "nft storage", "defi dapps connection"] },
+                    { name: "Kraken", url: "https://www.kraken.com", tags: ["secure exchange", "fiat funding", "pro crypto terminal", "otc digital assets desk"] }
+                ]
+            }
+        };
+
+        let activeCategoryKey = 'home';
+
+        // Bootstraps application state
+        function initApp() {
+            renderSidebarNavigation();
+            renderDashboardBento(directoryData);
+            calculateDirectoryStats();
+        }
+
+        // Populates the Sidebar Menu on load
+        function renderSidebarNavigation() {
+            const container = document.getElementById('sidebar-categories-list');
+            let idx = 1;
+            let listHTML = '';
+
+            for (const key in directoryData) {
+                const item = directoryData[key];
+                listHTML += `
+                    <li>
+                        <a href="#" class="side-menu-btn" id="btn-side-${key}" onclick="navigateTo('${key}')">
+                            <i class="${item.icon}"></i>
+                            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.title}</span>
+                            <span class="btn-number">#${idx}</span>
+                        </a>
+                    </li>
+                `;
+                idx++;
+            }
+            container.innerHTML = listHTML;
+        }
+
+        // Populates the dashboard category bento card blocks
+        function renderDashboardBento(dataSource) {
+            const gridContainer = document.getElementById('dashboard-categories-bento');
+            let gridHTML = '';
+            
+            const coreKeys = Object.keys(directoryData);
+
+            if (Object.keys(dataSource).length === 0) {
+                gridContainer.innerHTML = `
+                    <div class="zero-state-block">
+                        <i class="fa-regular fa-folder-open"></i>
+                        <h4>No matching sectors found!</h4>
+                        <p>We couldn't locate any directories matching your query. Try searching broad terms like 'shopping', 'money' or 'beats'.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let colorIdx = 0;
+            for (const key in dataSource) {
+                const item = dataSource[key];
+                const absoluteIndex = coreKeys.indexOf(key) + 1;
+                const assignedColor = cardColors[colorIdx % cardColors.length];
+                colorIdx++;
+                
+                gridHTML += `
+                    <a href="#" class="brutalist-card" onclick="navigateTo('${key}')">
+                        <div>
+                            <div class="brutalist-card-header">
+                                <div class="card-icon-container" style="background-color: ${assignedColor}">
+                                    <i class="${item.icon}"></i>
+                                </div>
+                            </div>
+                            <h4 class="brutalist-card-title">${item.title}</h4>
+                            <p class="brutalist-card-desc" style="margin-top: 8px;">${item.desc}</p>
+                        </div>
+                        <div class="brutalist-card-footer">
+                            <span><i class="fa-solid fa-link" style="margin-right: 4px;"></i> ${item.items.length} links</span>
+                            <span class="card-position-badge">#${absoluteIndex}</span>
+                        </div>
+                    </a>
+                `;
+            }
+            gridContainer.innerHTML = gridHTML;
+        }
+
+        // Homescreen search mechanism filtering bento grid category tags
+        function filterDashboardCategories() {
+            const query = document.getElementById('home-category-search').value.toLowerCase().trim();
+            
+            if (query === "") {
+                renderDashboardBento(directoryData);
+                return;
+            }
+
+            const filteredSource = {};
+            
+            for (const key in directoryData) {
+                const category = directoryData[key];
+                const matchTitle = category.title.toLowerCase().includes(query);
+                const matchDesc = category.desc.toLowerCase().includes(query);
+                const matchTag = category.searchTags.some(tag => tag.toLowerCase().includes(query));
+
+                if (matchTitle || matchDesc || matchTag) {
+                    filteredSource[key] = category;
+                }
+            }
+
+            renderDashboardBento(filteredSource);
+        }
+
+        // Global stat tracking dashboard displays
+        function calculateDirectoryStats() {
+            let totalCategories = Object.keys(directoryData).length;
+            let totalLinks = 0;
+            
+            for (const key in directoryData) {
+                totalLinks += directoryData[key].items.length;
+            }
+
+            document.getElementById('stat-count-categories').textContent = totalCategories;
+            document.getElementById('stat-count-platforms').textContent = totalLinks;
+        }
+
+        // Router Engine navigation handling
+        function navigateTo(key) {
+            // Remove active states from side panel
+            document.querySelectorAll('.side-menu-btn').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const targetSideBtn = document.getElementById(`btn-side-${key}`);
+            if (targetSideBtn) {
+                targetSideBtn.classList.add('active');
+            } else if (key === 'home') {
+                document.getElementById('btn-side-home').classList.add('active');
+            }
+
+            // Hide all views first
+            document.querySelectorAll('.view-frame').forEach(frame => {
+                frame.classList.remove('active');
+            });
+
+            activeCategoryKey = key;
+
+            if (key === 'home') {
+                document.getElementById('view-home').classList.add('active');
+                document.getElementById('home-category-search').value = '';
+                renderDashboardBento(directoryData);
+            } else if (key === 'privacy') {
+                document.getElementById('view-privacy').classList.add('active');
+            } else if (key === 'terms') {
+                document.getElementById('view-terms').classList.add('active');
+            } else {
+                document.getElementById('view-directory').classList.add('active');
+                
+                const category = directoryData[key];
+                document.getElementById('dir-page-title').innerHTML = `<i class="${category.icon}"></i> ${category.title}`;
+                document.getElementById('dir-page-item-count').textContent = `${category.items.length} items`;
+                
+                const searchInput = document.getElementById('dir-platform-search');
+                searchInput.value = '';
+                searchInput.placeholder = `Filter inside ${category.title} catalog...`;
+                
+                renderActiveList(category.items);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Renders active category cards to UI
+        function renderActiveList(items) {
+            const container = document.getElementById('dir-platforms-container');
+            
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div class="zero-state-block" style="grid-column: 1 / -1;">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <h4>No channels match your filters</h4>
+                        <p>Double-check your spelling or look up broader terms.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const cardsHTML = items.map(item => {
+                let cleanDomain = item.url.replace('https://', '').replace('www.', '').split('/')[0];
+                const tagsHTML = item.tags.map(tag => `<span class="platform-pill">${tag}</span>`).join('');
+
+                return `
+                    <div class="platform-brutalist-card">
+                        <div class="platform-data">
+                            <span class="platform-title-name">${item.name}</span>
+                            <span class="platform-domain-text">${cleanDomain}</span>
+                            <div class="platform-pill-row">
+                                ${tagsHTML}
+                            </div>
+                        </div>
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn-launch-url">
+                            <span>Open URL</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = cardsHTML;
+        }
+
+        // Interactive filtering function within directories
+        function filterActivePlatformList() {
+            const query = document.getElementById('dir-platform-search').value.toLowerCase().trim();
+            const currentItems = directoryData[activeCategoryKey].items;
+
+            const filteredItems = currentItems.filter(item => {
+                const matchName = item.name.toLowerCase().includes(query);
+                const matchTag = item.tags.some(tag => tag.toLowerCase().includes(query));
+                return matchName || matchTag;
+            });
+
+            renderActiveList(filteredItems);
+        }
+
+        // Initialize App Framework
+        window.onload = initApp;
+    </script>
 </body>
 </html>
+
+```
