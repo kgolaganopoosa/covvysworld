@@ -1,9 +1,13 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Covvy's World | The Ultimate Hub</title>
+    
+    <!-- Link element for dynamic PWA Manifest injection -->
+    <link id="pwa-manifest" rel="manifest">
     
     <!-- Google Fonts: Lexend for super-readable headers, Inter for ultra-legible UI body text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -646,6 +650,123 @@
             margin-bottom: 24px;
         }
 
+        /* PWA Install Promotion Overlay Modal (Neo-Brutalist Theme) */
+        #pwa-install-popup {
+            position: fixed;
+            bottom: -300px; /* Hidden initially, slides in */
+            right: 40px;
+            width: 380px;
+            background-color: var(--bg-card-yellow);
+            border: var(--border-thick);
+            padding: 24px;
+            box-shadow: var(--shadow-deep);
+            z-index: 9999;
+            transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        @media (max-width: 640px) {
+            #pwa-install-popup {
+                right: 15px;
+                left: 15px;
+                width: auto;
+            }
+        }
+
+        #pwa-install-popup.slide-up {
+            bottom: 40px;
+        }
+
+        .pwa-popup-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pwa-app-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--color-white);
+            border: var(--border-thin);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-flat);
+        }
+
+        .pwa-app-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .pwa-title-wrap h4 {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .pwa-title-wrap span {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+        }
+
+        .pwa-popup-body p {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            font-weight: 500;
+            color: var(--color-dark-ink);
+        }
+
+        .pwa-popup-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .pwa-btn-primary {
+            background-color: var(--color-dark-ink);
+            color: var(--color-white);
+            border: var(--border-thin);
+            padding: 8px 12px;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-flat);
+            transition: var(--transition-snap);
+            text-align: center;
+        }
+
+        .pwa-btn-primary:hover {
+            background-color: var(--color-white);
+            color: var(--color-dark-ink);
+            transform: translate(-2px, -2px);
+            box-shadow: var(--shadow-deep);
+        }
+
+        .pwa-btn-secondary {
+            background-color: var(--color-white);
+            color: var(--color-dark-ink);
+            border: var(--border-thin);
+            padding: 8px 12px;
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-snap);
+            text-align: center;
+        }
+
+        .pwa-btn-secondary:hover {
+            background-color: var(--bg-card-pink);
+            transform: translate(-1px, -1px);
+        }
+
         /* Saturated Solid Footer */
         footer {
             border-top: var(--border-thick);
@@ -874,6 +995,30 @@
         </main>
     </div>
 
+    <!-- PWA Install Prompt Element -->
+    <div id="pwa-install-popup">
+        <div class="pwa-popup-header">
+            <div class="pwa-app-icon">
+                <svg viewBox="0 0 512 512">
+                    <rect width="512" height="512" fill="#ffde43" stroke="#0d0f12" stroke-width="32"/>
+                    <rect x="120" y="120" width="272" height="272" fill="#ffa3e3" stroke="#0d0f12" stroke-width="24"/>
+                    <rect x="180" y="180" width="152" height="152" fill="#99f3ff" stroke="#0d0f12" stroke-width="16"/>
+                </svg>
+            </div>
+            <div class="pwa-title-wrap">
+                <h4>Covvy's World</h4>
+                <span>WEB UTILITY APP</span>
+            </div>
+        </div>
+        <div class="pwa-popup-body">
+            <p>Install this directory hub onto your home screen for rapid offline launching and a true full-screen experience!</p>
+        </div>
+        <div class="pwa-popup-actions">
+            <button class="pwa-btn-primary" onclick="triggerPwaInstall()">INSTALL</button>
+            <button class="pwa-btn-secondary" onclick="dismissPwaPrompt()">LATER</button>
+        </div>
+    </div>
+
     <!-- Brutalist Interactive Footer -->
     <footer>
         <p>
@@ -886,7 +1031,9 @@
 
     <!-- JS State Engine & Routing Controllers -->
     <script>
-        // Centralized Master Directory Catalog
+        // PWA Engine State variables
+        let deferredPrompt = null;
+
         // Saturated background color allocations for Neo-Brutalist cards
         const cardColors = [
             'var(--bg-card-pink)', 
@@ -1086,9 +1233,100 @@
 
         // Bootstraps application state
         function initApp() {
+            registerServiceWorkerAndManifest();
             renderSidebarNavigation();
             renderDashboardBento(directoryData);
             calculateDirectoryStats();
+            setupPwaInterceptors();
+        }
+
+        // PWA Engine: Dynamically build Web App Manifest & Service Worker as inline blobs
+        function registerServiceWorkerAndManifest() {
+            // Build Manifest dynamically matching our Neo-Brutalist color theme and customized App Icon
+            const manifestObj = {
+                "name": "Covvy's World Directory Hub",
+                "short_name": "Covvy's World",
+                "description": "Unified directory hub for world-renowned platform services and resources.",
+                "start_url": window.location.href,
+                "display": "standalone",
+                "background_color": "#f4f2ec",
+                "theme_color": "#ffde43",
+                "icons": [
+                    {
+                        "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%23ffde43' stroke='%230d0f12' stroke-width='32'/><rect x='120' y='120' width='272' height='272' fill='%23ffa3e3' stroke='%230d0f12' stroke-width='24'/><rect x='180' y='180' width='152' height='152' fill='%2399f3ff' stroke='%230d0f12' stroke-width='16'/></svg>",
+                        "sizes": "512x512",
+                        "type": "image/svg+xml",
+                        "purpose": "any maskable"
+                    }
+                ]
+            };
+
+            const stringManifest = JSON.stringify(manifestObj);
+            const manifestBlob = new Blob([stringManifest], {type: 'application/json'});
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            document.getElementById('pwa-manifest').setAttribute('href', manifestURL);
+
+            // Register service worker to satisfy installation thresholds on standard HTTPS deployments
+            if ('serviceWorker' in navigator) {
+                const swContent = `
+                    self.addEventListener('install', (e) => self.skipWaiting());
+                    self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(fetch(e.request).catch(() => new Response('Offline capability active.')));
+                    });
+                `;
+                const swBlob = new Blob([swContent], {type: 'application/javascript'});
+                const swURL = URL.createObjectURL(swBlob);
+                navigator.serviceWorker.register(swURL).catch(err => {
+                    console.log("Local SW registration bypassed (expected in non-HTTPS sandboxes):", err);
+                });
+            }
+        }
+
+        // PWA Engine: Intercept native app installer event & handle custom single-prompt popup trigger
+        function setupPwaInterceptors() {
+            window.addEventListener('beforeinstallprompt', (e) => {
+                // Prevent standard micro-bar popup from displaying immediately
+                e.preventDefault();
+                deferredPrompt = e;
+
+                // Check localStorage to respect the user's decision and prompt them only once
+                const alreadyPrompted = localStorage.getItem('covvy_pwa_prompt_dismissed');
+                if (!alreadyPrompted) {
+                    // Delay the slide-up prompt for 2 seconds to keep user onboarding friendly
+                    setTimeout(() => {
+                        const popup = document.getElementById('pwa-install-popup');
+                        if (popup) popup.classList.add('slide-up');
+                    }, 2000);
+                }
+            });
+        }
+
+        // PWA Action: Execute app installation flow
+        function triggerPwaInstall() {
+            const popup = document.getElementById('pwa-install-popup');
+            if (popup) popup.classList.remove('slide-up');
+
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted Covvys World PWA installation.');
+                    }
+                    // Save user selection to prevent prompting again
+                    localStorage.setItem('covvy_pwa_prompt_dismissed', 'true');
+                    deferredPrompt = null;
+                });
+            }
+        }
+
+        // PWA Action: Gracefully close prompt and flag to prevent future popups
+        function dismissPwaPrompt() {
+            const popup = document.getElementById('pwa-install-popup');
+            if (popup) popup.classList.remove('slide-up');
+            
+            // Mark as dismissed so they are only prompted once
+            localStorage.setItem('covvy_pwa_prompt_dismissed', 'true');
         }
 
         // Populates the Sidebar Menu on load
@@ -1235,7 +1473,7 @@
                 
                 const searchInput = document.getElementById('dir-platform-search');
                 searchInput.value = '';
-                searchInput.placeholder = `Filter inside ${category.title} catalog...`;
+                searchInput.placeholder = `Filter within ${category.title} catalog...`;
                 
                 renderActiveList(category.items);
             }
@@ -1300,3 +1538,5 @@
     </script>
 </body>
 </html>
+
+```
